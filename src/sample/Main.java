@@ -51,9 +51,49 @@ public class Main extends Application
         playerOneStage.show();
         playerTwoStage.show();
     }
+    public boolean isBoardFull()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (cell[i][j].getPlayer() == 8)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean hasWon(int player)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (cell[i][0].getPlayer() == player && cell[i][1].getPlayer() == player && cell[i][2].getPlayer() == player)
+            {
+                return true;
+            }
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            if (cell[0][i].getPlayer() == player && cell[1][i].getPlayer() == player && cell[2][i].getPlayer() == player)
+            {
+                return true;
+            }
+        }
+        if (cell[0][0].getPlayer() == player && cell[1][1].getPlayer() == player && cell[2][2].getPlayer() == player)
+        {
+            return true;
+        }
+        if (cell[0][2].getPlayer() == player && cell[1][1].getPlayer() == player && cell[2][0].getPlayer() == player)
+        {
+            return true;
+        }
+        return false;
+    }
     public class Cell extends Pane
     {
-        private int player = 0;
+        private int player = 8;
         public Cell()
         {
             setStyle("-fx-border-color: black");
@@ -62,16 +102,25 @@ public class Main extends Application
         }
         private void handleClick()
         {
-            if (currentPlayer % 2 == 0)
+            if (player == 8)
             {
-                setPlayer(0);
-                currentPlayer++;
+                if (currentPlayer % 2 == 0)
+                {
+                    setPlayer(0);
+                    currentPlayer++;
+                }
+                else
+                {
+                    setPlayer(1);
+                    currentPlayer++;
+                }
+                if (hasWon(this.player))
+                {
+                    System.out.println("Player " + player + " has won!");
+                }
             }
-            else
-            {
-                 setPlayer(1);
-                 currentPlayer++;
-            }
+
+
         }
         public int getPlayer()
         {
@@ -88,6 +137,10 @@ public class Main extends Application
             {
                 setStyle("-fx-background-color: red");
             }
+        }
+        public void setCell(int p)
+        {
+
         }
     }
     public static void main(String[] args) throws IOException
