@@ -1,12 +1,8 @@
-package sample;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -14,7 +10,8 @@ public class Main extends Application
 {
     GridPane gridPaneOne = new GridPane();
     GridPane gridPaneTwo = new GridPane();
-    Cell[][] cell = new Cell[3][3];
+    Cell[][] cellOne = new Cell[3][3];
+    Cell[][] cellTwo = new Cell[3][3];
     private int currentPlayer = 0;
     @Override
     public void start(Stage playerOneStage) throws Exception
@@ -23,20 +20,12 @@ public class Main extends Application
         {
             for (int j = 0; j < 3; j++)
             {
-                cell[i][j] = new Cell();
-                gridPaneOne.add(cell[i][j], j, i);
-                cell[i][j] = new Cell();
-                gridPaneTwo.add(cell[i][j], j, i);
+                cellOne[i][j] = new Cell();
+                gridPaneOne.add(cellOne[i][j], j, i);
+                cellTwo[i][j] = new Cell();
+                gridPaneTwo.add(cellTwo[i][j], j, i);
             }
         }
-
-        gameClient testClient = new gameClient();
-        gameClient testClient2 = new gameClient();
-        Thread thread = new Thread(testClient);
-        Thread thread1 = new Thread(testClient2);
-        thread.start();
-        thread1.start();
-
         Stage playerTwoStage = new Stage();
         playerOneStage.setTitle("Tic Tac Toe Player 1");
         playerTwoStage.setTitle("Tic Tac Toe Player 2");
@@ -57,7 +46,7 @@ public class Main extends Application
         {
             for (int j = 0; j < 3; j++)
             {
-                if (cell[i][j].getPlayer() == 8)
+                if (cellOne[i][j].getPlayer() == 8)
                 {
                     return false;
                 }
@@ -69,23 +58,23 @@ public class Main extends Application
     {
         for (int i = 0; i < 3; i++)
         {
-            if (cell[i][0].getPlayer() == player && cell[i][1].getPlayer() == player && cell[i][2].getPlayer() == player)
+            if (cellOne[i][0].getPlayer() == player && cellOne[i][1].getPlayer() == player && cellOne[i][2].getPlayer() == player)
             {
                 return true;
             }
         }
         for (int i = 0; i < 3; i++)
         {
-            if (cell[0][i].getPlayer() == player && cell[1][i].getPlayer() == player && cell[2][i].getPlayer() == player)
+            if (cellOne[0][i].getPlayer() == player && cellOne[1][i].getPlayer() == player && cellOne[2][i].getPlayer() == player)
             {
                 return true;
             }
         }
-        if (cell[0][0].getPlayer() == player && cell[1][1].getPlayer() == player && cell[2][2].getPlayer() == player)
+        if (cellOne[0][0].getPlayer() == player && cellOne[1][1].getPlayer() == player && cellOne[2][2].getPlayer() == player)
         {
             return true;
         }
-        if (cell[0][2].getPlayer() == player && cell[1][1].getPlayer() == player && cell[2][0].getPlayer() == player)
+        if (cellOne[0][2].getPlayer() == player && cellOne[1][1].getPlayer() == player && cellOne[2][0].getPlayer() == player)
         {
             return true;
         }
@@ -102,6 +91,7 @@ public class Main extends Application
         }
         private void handleClick()
         {
+            cellTwo[0][1].setPlayer(0);
             if (player == 8)
             {
                 if (currentPlayer % 2 == 0)
@@ -118,9 +108,10 @@ public class Main extends Application
                 {
                     System.out.println("Player " + player + " has won!");
                 }
+                if (isBoardFull()) {
+                    System.out.println("Draw!");
+                }
             }
-
-
         }
         public int getPlayer()
         {
@@ -131,11 +122,11 @@ public class Main extends Application
             this.player = p;
             if (player == 0)
             {
-                setStyle("-fx-background-color: blue");
+                setStyle("-fx-background-color: blue; -fx-border-color: black");
             }
             else if (player == 1)
             {
-                setStyle("-fx-background-color: red");
+                setStyle("-fx-background-color: red; -fx-border-color: black");
             }
         }
         public void setCell(int p)
