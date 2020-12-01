@@ -91,17 +91,18 @@ public class Main extends Application
         }
         private void handleClick()
         {
-            cellTwo[0][1].setPlayer(0);
             if (player == 8)
             {
                 if (currentPlayer % 2 == 0)
                 {
                     setPlayer(0);
+                    setCell(0);
                     currentPlayer++;
                 }
                 else
                 {
                     setPlayer(1);
+                    setCell(1);
                     currentPlayer++;
                 }
                 if (hasWon(this.player))
@@ -131,7 +132,18 @@ public class Main extends Application
         }
         public void setCell(int p)
         {
-
+            int colRand = (int)(Math.random() * (2 - 0 + 1) + 0);
+            int rowRand = (int)(Math.random() * (2 - 0 + 1) + 0);
+            if (cellTwo[rowRand][colRand].getPlayer() == 8)
+            {
+                cellTwo[rowRand][colRand].setPlayer(p);
+                System.out.println("Setting Row: " + rowRand + " and Col: " + colRand);
+            }
+            else
+            {
+                System.out.println("Row: " + rowRand + " and Col: " + colRand + " are taken, re-calling setCell.");
+                setCell(p);
+            }
         }
     }
     public static void main(String[] args) throws IOException
