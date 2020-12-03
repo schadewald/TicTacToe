@@ -126,7 +126,16 @@ public class gameClient extends Application
                 }
                 if (hasWon(this.player))
                 {
-                    System.out.println("Player " + player + " has won!");
+                    String playerColor = "";
+                    if (player == 0)
+                    {
+                        playerColor = "Blue";
+                    }
+                    if (player == 1)
+                    {
+                        playerColor = "Red";
+                    }
+                    System.out.println(playerColor + " has won!");
                 }
                 if (isBoardFull()) {
                     System.out.println("Draw!");
