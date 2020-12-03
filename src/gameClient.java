@@ -3,19 +3,23 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
-
+/**
+ * Chad Schadewald
+ * gameClient.java
+ * Project 4
+ */
 public class gameClient extends Application
 {
     GridPane gridPaneOne = new GridPane();
     Cell[][] cellOne = new Cell[3][3];
-    private int currentPlayer = 0;
+    public int currentPlayer = 0;
+    private int playerNumber = 0;
 
     public static void main(String[] args) throws IOException
     {
@@ -26,7 +30,7 @@ public class gameClient extends Application
         Scanner in = new Scanner(inStream);
         PrintWriter out = new PrintWriter(outStream);
         System.out.println("Testing gameClient.");
-        String command = "TEST\n";
+        String command = "START\n";
         System.out.println("Sending: " + command);
         out.print(command);
         out.flush();
@@ -36,7 +40,6 @@ public class gameClient extends Application
 
         Application.launch(args);
     }
-
     @Override
     public void start(Stage primaryStage) throws Exception
     {

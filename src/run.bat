@@ -3,5 +3,5 @@ javac gameClient.java
 javac Game.java
 
 
-Echo Starting Server
+Echo Starting Server - (Must Start gameClient In A Separate Terminal)
 java Main

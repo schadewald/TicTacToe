@@ -1,17 +1,15 @@
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
-
+/**
+ * Chad Schadewald
+ * Game.java
+ * Project 3
+ */
 public class Game implements Runnable
 {
-    private int currentPlayer = 0;
+    private int currentPlayer = 8;
     private Socket s;
     private Scanner in;
     private PrintWriter out;
@@ -54,9 +52,19 @@ public class Game implements Runnable
     public void executeCommand(String command)
     {
         System.out.println("Command at start of executeCommand is: " + command);
-        if (command.equals("TEST"))
+        if (command.equals("START"))
         {
-            System.out.println("Test received.");
+            System.out.println("Start command received.");
+            if (currentPlayer == 8)
+            {
+                currentPlayer = 1;
+            }
+            else
+            {
+                currentPlayer = 2;
+            }
+            out.println("Hello you are player " + currentPlayer);
+            out.flush();
         }
         else if (!command.equals("PLAYERMOVE"))
         {
